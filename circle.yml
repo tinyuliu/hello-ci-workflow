@@ -4,10 +4,9 @@ jobs:
     build-and-test:
         machine:
           node:
-            version: 0.10
+            version: 12.16.0
         test:
-          override:
-            - ./node_modules/.bin/mocha
+          - npm test
 
 workflows:
     main:
