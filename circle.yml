@@ -7,7 +7,7 @@ jobs:
             - checkout
             - run: sudo npm install -g
             - run:
-                command: mocha
+                command: npm test
                 environment:
                   MOCHA_FILE: ./node_modules/.bin/mocha
                 when: always
