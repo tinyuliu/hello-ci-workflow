@@ -7,9 +7,9 @@ jobs:
             - checkout
             - run: sudo npm install -g
             - run:
-                command: npm test
+                command: mocha
                 environment:
-                  MOCHA_FILE: ./test_result/mocha/results.xml
+                  MOCHA_FILE: ./node_modules/.bin/mocha
                 when: always
             - store_test_results:
                 path: ./test_result
