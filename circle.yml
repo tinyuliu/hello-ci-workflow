@@ -1,5 +1,15 @@
-machine:
-    node:
-        version:12.16.0
-    test:
-        -npm test
+version: 2.1
+
+jobs:
+    build-and-test:
+        machine:
+          node:
+            version: 0.10
+        test:
+          override:
+            - ./node_modules/.bin/mocha
+
+workflows:
+    main:
+        jobs:
+            - build-and-test
