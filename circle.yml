@@ -15,29 +15,32 @@ jobs:
     # These next lines define a Docker executor: https://circleci.com/docs/2.0/executor-types/
     # You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # A list of available CircleCI Docker Convenience Images are available here: https://circleci.com/developer/images/image/cimg/node
-    docker:
-      - image: cimg/node:12.16.0
+    build:
+        docker:
+            - image: buildpack-deps:trusty
+
+    
+    # docker:
+    #   - image: cimg/node:12.16.0
+    
+    
     # Then run your tests!
     # CircleCI will report the results back to your VCS provider.
-    steps:
-      # Checkout the code as the first step.
-      - checkout
-      # Next, the node orb's install-packages step will install the dependencies from a package.json.
-      # The orb install-packages step will also automatically cache them for faster future runs.
-      - node/install-packages
-      # If you are using yarn instead npm, remove the line above and uncomment the two lines below.
-      # - node/install-packages:
-      #     pkg-manager: yarn
+    # steps:
+    #   # Checkout the code as the first step.
+    #   - checkout
+    #   # Next, the node orb's install-packages step will install the dependencies from a package.json.
+    #   # The orb install-packages step will also automatically cache them for faster future runs.
+    #   - node/install-packages
+    #   # If you are using yarn instead npm, remove the line above and uncomment the two lines below.
+    #   # - node/install-packages:
+    #   #     pkg-manager: yarn
 
-      - docker build -t hello-ci-workflow .
-      - ./node_modules/.bin/mocha
-      # 使用 curl 測試 docker 是否有順利執行 node
-      - docker run -d -p 3000:3000 hello-ci-workflow; sleep 10
-      - curl --retry 10 --retry-delay 5 -v http://localhost:3000
-
-      # - run:
-      #     name: Run tests
-      #     command: npm test
+      - run:
+        - ./node_modules/.bin/mocha
+        # 使用 curl 測試 docker 是否有順利執行 node
+        - docker run -d -p 3000:3000 hello-ci-workflow; sleep 10
+        - curl --retry 10 --retry-delay 5 -v http://localhost:3000
 
 workflows:
   # Below is the definition of your workflow.
