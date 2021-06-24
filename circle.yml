@@ -27,7 +27,8 @@ jobs:
     # docker:
     #   - image: cimg/node:12.16.0
     
-    
+    - docker build -t hello-ci-workflow .
+    - ./node_modules/.bin/mocha
     # Then run your tests!
     # CircleCI will report the results back to your VCS provider.
     # steps:
@@ -41,11 +42,11 @@ jobs:
     #   #     pkg-manager: yarn
 
       - run:
-        - docker build -t hello-ci-workflow .
-        - ./node_modules/.bin/mocha
+        name: Run Docker
+        command: docker run -d -p 3000:3000 hello-ci-workflow; sleep 10
         # 使用 curl 測試 docker 是否有順利執行 node
-        - docker run -d -p 3000:3000 hello-ci-workflow; sleep 10
-        - curl --retry 10 --retry-delay 5 -v http://localhost:3000
+        # - docker run -d -p 3000:3000 hello-ci-workflow; sleep 10
+        # - curl --retry 10 --retry-delay 5 -v http://localhost:3000
 
 workflows:
   # Below is the definition of your workflow.
