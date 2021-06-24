@@ -11,27 +11,15 @@ orbs:
 
 jobs:
   # Below is the definition of your job to build and test your app, you can rename and customize it as you want.
-  build-and-test:
-    # These next lines define a Docker executor: https://circleci.com/docs/2.0/executor-types/
-    # You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # A list of available CircleCI Docker Convenience Images are available here: https://circleci.com/developer/images/image/cimg/node
-    docker:
-      - image: cimg/node:12.16.0
-    # Then run your tests!
-    # CircleCI will report the results back to your VCS provider.
-    steps:
-      # Checkout the code as the first step.
-      - checkout
-      # Next, the node orb's install-packages step will install the dependencies from a package.json.
-      # The orb install-packages step will also automatically cache them for faster future runs.
-      - docker build -t hello-ci-workflow .
-      # If you are using yarn instead npm, remove the line above and uncomment the two lines below.
-      # - node/install-packages:
-      #     pkg-manager: yarn
+     machine: true
+       steps:
+         - checkout
 
-      - run:
-          name: Run tests
-          command: docker run -d -p 3000:3000 hello-ci-workflow; sleep 10
+         # build the application image
+         - run: docker build -t hello-ci-workflow .
+
+         # deploy the image
+         - run: docker run -d -p 3000:3000 hello-ci-workflow; sleep 10
 
 workflows:
   # Below is the definition of your workflow.
