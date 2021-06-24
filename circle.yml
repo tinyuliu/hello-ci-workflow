@@ -19,21 +19,22 @@ jobs:
     #     docker:
     #         - image: buildpack-deps:trusty
 
-    docker:
-      - image: buildpack-deps:trusty
+    # docker:
+    #   - image: buildpack-deps:trusty
     # Then run your tests!
     # CircleCI will report the results back to your VCS provider.
     steps:
-    # docker:
-    #   - image: cimg/node:12.16.0
+        docker:
+          - image: cimg/node:12.16.0
     
-    - docker build -t hello-ci-workflow .
-    - ./node_modules/.bin/mocha
+        # - docker build -t hello-ci-workflow .
+        # - ./node_modules/.bin/mocha
     # Then run your tests!
     # CircleCI will report the results back to your VCS provider.
     # steps:
     #   # Checkout the code as the first step.
-    #   - checkout
+        - checkout
+        - docker build -t hello-ci-workflow .
     #   # Next, the node orb's install-packages step will install the dependencies from a package.json.
     #   # The orb install-packages step will also automatically cache them for faster future runs.
     #   - node/install-packages
