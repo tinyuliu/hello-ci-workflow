@@ -13,3 +13,4 @@ jobs:
      # 使用 curl 測試 docker 是否有順利執行 node
      - run: curl --retry 10 --retry-delay 5 -v http://localhost:3000
 
+# test with curl
