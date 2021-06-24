@@ -16,7 +16,7 @@ jobs:
     # You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # A list of available CircleCI Docker Convenience Images are available here: https://circleci.com/developer/images/image/cimg/node
     docker:
-      - image: cimg/node:15.1
+      - image: cimg/node:12.16.0
     # Then run your tests!
     # CircleCI will report the results back to your VCS provider.
     steps:
@@ -28,9 +28,16 @@ jobs:
       # If you are using yarn instead npm, remove the line above and uncomment the two lines below.
       # - node/install-packages:
       #     pkg-manager: yarn
-      - run:
-          name: Run tests
-          command: npm test
+
+      - docker build -t hello-ci-workflow .
+      - ./node_modules/.bin/mocha
+      # 使用 curl 測試 docker 是否有順利執行 node
+      - docker run -d -p 3000:3000 hello-ci-workflow; sleep 10
+      - curl --retry 10 --retry-delay 5 -v http://localhost:3000
+
+      # - run:
+      #     name: Run tests
+      #     command: npm test
 
 workflows:
   # Below is the definition of your workflow.
